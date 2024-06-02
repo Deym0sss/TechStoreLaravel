@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center align-items-center">
+  <div class="card" style="width: 600px">
+    <h2 class="m-auto">Register</h2>
+    <form class="d-flex flex-column">
+      <input
+        class="form-control m-3"
+        placeholder="Enter email"
+        type="name"
+        name="email"
+        id="email"
+        type="email"
+        [(ngModel)]="formData.email"
+        style="width: 200px"
+      />
+      <input
+        class="form-control m-3"
+        placeholder="Enter password"
+        type="name"
+        name="password"
+        id="password"
+        type="password"
+        [(ngModel)]="formData.password"
+        style="width: 200px"
+      />
+      <div class="d-flex justify-content-between m-3">
+        <div class="d-flex align-items-center flex-row">
+          Already have account?
+          <a
+            class="nav-link mx-2 text-decoration-underline text-primary"
+            routerLink="/auth"
+            >Login</a
+          >
+        </div>
+        <button class="btn btn-outline-success" (click)="onSubmitCreate()">
+          Sign up
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

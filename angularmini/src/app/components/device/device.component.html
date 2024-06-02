@@ -1,0 +1,36 @@
+<div
+  class="d-flex justify-content-between"
+  style="width: 100%; padding: 0px 200px 0px 200px"
+>
+  <img [src]="imgSrc" alt="Image" style="padding-top: 10px" />
+  <div
+    style="
+      border: 2px solid grey;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <div class="pb-5">
+      <h2>{{ device.name }}</h2>
+      <h2>{{ device.price }} $</h2>
+    </div>
+
+    <button (click)="addToBasket()" class="btn btn-outline-dark">
+      Add to basket
+    </button>
+  </div>
+</div>
+<div style="padding-top: 100px">
+  <div
+    *ngFor="let info of deviceInfo; let i = index"
+    class="device-info-item d-flex flex-row"
+    [style.background-color]="i % 2 !== 0 ? 'white' : 'grey'"
+  >
+    <label class="mx-3" style="font-size: 40px">{{ info.title }} :</label>
+    <label class="mx-3" style="font-size: 40px">{{ info.description }}</label>
+  </div>
+</div>

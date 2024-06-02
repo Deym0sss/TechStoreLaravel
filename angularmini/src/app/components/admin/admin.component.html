@@ -1,0 +1,317 @@
+<div class="d-flex flex-column align-items-center">
+  <button
+    [style.margin-bottom.px]="10"
+    [style.width.px]="200"
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#modal1"
+  >
+    Create type
+  </button>
+  <button
+    [style.margin-bottom.px]="10"
+    [style.width.px]="200"
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#modal2"
+  >
+    Create brand
+  </button>
+  <button
+    [style.margin-bottom.px]="10"
+    [style.width.px]="200"
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#modal3"
+  >
+    Create device
+  </button>
+  <button
+    [style.margin-bottom.px]="10"
+    [style.width.px]="200"
+    type="button"
+    class="btn btn-danger"
+    data-bs-toggle="modal"
+    data-bs-target="#modal4"
+  >
+    Delete type
+  </button>
+  <button
+    [style.margin-bottom.px]="10"
+    [style.width.px]="200"
+    type="button"
+    class="btn btn-danger"
+    data-bs-toggle="modal"
+    data-bs-target="#modal5"
+  >
+    Delete brand
+  </button>
+  <button
+    [style.margin-bottom.px]="10"
+    [style.width.px]="200"
+    type="button"
+    class="btn btn-danger"
+    data-bs-toggle="modal"
+    data-bs-target="#modal6"
+  >
+    Delete device
+  </button>
+</div>
+
+<app-modal
+  modalId="modal1"
+  title="Create type"
+  [contentTemplate]="createTypeTemplate"
+></app-modal>
+<app-modal
+  modalId="modal2"
+  title="Create brand"
+  [contentTemplate]="createBrandTemplate"
+></app-modal>
+<app-modal
+  modalId="modal3"
+  title="Create device"
+  [contentTemplate]="createDeviceTemplate"
+></app-modal>
+<app-modal
+  modalId="modal4"
+  title="Delete type"
+  [contentTemplate]="deleteTypeTemplate"
+></app-modal>
+<app-modal
+  modalId="modal5"
+  title="Delete brand"
+  [contentTemplate]="deleteBrandTemplate"
+></app-modal>
+<app-modal
+  modalId="modal6"
+  title="Delete device"
+  [contentTemplate]="deleteDeviceTemplate"
+></app-modal>
+
+<ng-template #createTypeTemplate>
+  <form (ngSubmit)="onSubmitTypeCreate()" #form="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Name of type</label>
+      <input
+        type="name"
+        class="form-control"
+        name="typeName"
+        id="typeName"
+        [(ngModel)]="formDataTypeCreate.name"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+    <button
+      data-bs-dismiss="modal"
+      type="submit"
+      class="btn btn-primary float-end mx-3"
+    >
+      Submit
+    </button>
+  </form>
+</ng-template>
+
+<ng-template #createBrandTemplate>
+  <form (ngSubmit)="onSubmitBrandCreate()" #form="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Name of brand</label>
+      <input
+        type="name"
+        class="form-control"
+        name="brandName"
+        id="brandName"
+        [(ngModel)]="formDataBrandCreate.name"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+    <button
+      data-bs-dismiss="modal"
+      type="submit"
+      class="btn btn-primary float-end mx-3"
+    >
+      Submit
+    </button>
+  </form>
+</ng-template>
+
+<ng-template #createDeviceTemplate>
+  <form (ngSubmit)="onSubmitDeviceCreate()" #form="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Name of device</label>
+      <input
+        type="name"
+        class="form-control"
+        name="deviceName"
+        id="deviceName"
+        [(ngModel)]="formDataDeviceCreate.name"
+        [ngModelOptions]="{ standalone: true }"
+      />
+      <label class="form-label">Price of device</label>
+      <input
+        type="number"
+        class="form-control"
+        name="devicePrice"
+        id="devicePrice"
+        [(ngModel)]="formDataDeviceCreate.price"
+        [ngModelOptions]="{ standalone: true }"
+      />
+      <label class="form-label">Upload image</label>
+      <input
+        type="file"
+        class="form-control"
+        name="deviceImg"
+        id="deviceImg"
+        (change)="onFileSelected($event)"
+        [(ngModel)]="formDataDeviceCreate.img"
+        [ngModelOptions]="{ standalone: true }"
+      />
+      <label class="form-label">Enter type</label>
+      <input
+        class="form-control"
+        name="deviceTypeId"
+        id="deviceTypeId"
+        [(ngModel)]="formDataDeviceCreate.typeId"
+        [ngModelOptions]="{ standalone: true }"
+      />
+      <label class="form-label">Enter brand</label>
+      <input
+        class="form-control"
+        name="deviceBrandId"
+        id="deviceBrandId"
+        [(ngModel)]="formDataDeviceCreate.brandId"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+
+    <button class="btn btn-outline-dark" (click)="addInfo()" type="button">
+      Add spec
+    </button>
+    <div *ngFor="let infoGroup of info.controls; let i = index">
+      <div [formGroup]="infoGroup.getRawValue()" class="row m-2">
+        <div class="col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Title"
+            formControlName="title"
+            (input)="changeInfo(i, 'title', $event)"
+          />
+        </div>
+        <div class="col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Description"
+            formControlName="description"
+            (input)="changeInfo(i, 'description', $event)"
+          />
+        </div>
+        <div class="col-md-4">
+          <button
+            class="btn btn-outline-danger"
+            (click)="removeInfo(i)"
+            type="button"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    <button
+      data-bs-dismiss="modal"
+      type="button"
+      (click)="onSubmitDeviceCreate()"
+      class="btn btn-primary float-end mx-3"
+    >
+      Submit
+    </button>
+    <!--  -->
+  </form>
+</ng-template>
+
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+
+<ng-template #deleteTypeTemplate>
+  <form (ngSubmit)="onSubmitTypeDelete()" #form="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Id of type</label>
+      <input
+        type="name"
+        class="form-control"
+        name="typeId"
+        id="typeId"
+        [(ngModel)]="formDataTypeDelete.id"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+    <button
+      data-bs-dismiss="modal"
+      type="submit"
+      class="btn btn-primary float-end mx-3"
+    >
+      Submit
+    </button>
+  </form>
+</ng-template>
+
+<ng-template #deleteBrandTemplate>
+  <form (ngSubmit)="onSubmitBrandDelete()" #form="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Id of brand</label>
+      <input
+        type="name"
+        class="form-control"
+        name="brandId"
+        id="brandId"
+        [(ngModel)]="formDataBrandDelete.id"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+    <button
+      data-bs-dismiss="modal"
+      type="submit"
+      class="btn btn-primary float-end mx-3"
+    >
+      Submit
+    </button>
+  </form>
+</ng-template>
+
+<ng-template #deleteDeviceTemplate>
+  <form (ngSubmit)="onSubmitDeviceDelete()" #form="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Id of device</label>
+      <input
+        type="name"
+        class="form-control"
+        name="deviceId"
+        id="deviceId"
+        [(ngModel)]="formDataDeviceDelete.id"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+    <button
+      data-bs-dismiss="modal"
+      type="submit"
+      class="btn btn-primary float-end mx-3"
+    >
+      Submit
+    </button>
+  </form>
+</ng-template>
